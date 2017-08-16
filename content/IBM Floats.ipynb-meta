@@ -1,0 +1,7 @@
+Title: Converting IBM Floats in Python
+Slug: ibm-float
+Date: 08-16-17 12:00
+Category: posts
+Tags: python datatypes math numba
+author: Ike Hall
+Summary: Using python and numba to convert IBM float to IEEE
