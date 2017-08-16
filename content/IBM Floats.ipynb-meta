@@ -1,7 +1,0 @@
-Title: Converting IBM floats in Python
-Slug: ibm-float-python
-Date: 2017-08-16 12:00
-Category: posts
-Tags: python SEGY formats
-author: Ike Hall
-Summary: Converting IBM floating point numbers to IEEE with python and numba
