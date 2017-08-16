@@ -24,8 +24,7 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          ('Python.org', 'http://python.org/'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (('Twitter', 'https://twitter.com/IkeOnTweets'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -39,4 +38,8 @@ PLUGINS = ['ipynb.markup', 'ipynb.liquid', 'assets']
 THEME = './theme/syte'
 
 #Theme stuff:
-ABOUT = "This is where I write about python and other things"
+ABOUT = "Musings with python"
+CONTACT = 'ike.hall@gmail.com'
+
+TWITTER_INTEGRATION_ENABLED = True
+TWITTER_USERNAME = 'IkeOnTweets'
