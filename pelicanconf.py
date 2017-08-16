@@ -21,9 +21,7 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+         ('Python.org', 'http://python.org/'),)
 
 # Social widget
 SOCIAL = (('You can add links in your config file', '#'),
@@ -37,5 +35,8 @@ DEFAULT_PAGINATION = 10
 MARKUP = ('md','ipynb')
 
 PLUGIN_PATHS = ['./plugins', 'pelican-plugins']
-PLUGINS = ['ipynb.markup']
-THEME = './theme/subtle'
+PLUGINS = ['ipynb.markup', 'ipynb.liquid', 'assets']
+THEME = './theme/syte'
+
+#Theme stuff:
+ABOUT = "This is where I write about python and other things"

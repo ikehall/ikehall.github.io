@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>Seismic Python - Authors</title>
-        <link rel="stylesheet" href="http://ikehall.github.io/theme/css/main.css" />
-        <link href="http://ikehall.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Seismic Python Atom Feed" />
+  <meta charset="utf-8" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seismic Python - Authors</title>
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+    <link rel="stylesheet" href="/theme/css/styles.min.css?9b05ffb8">
+
+  <link rel="shortcut icon" type="image/png" href="" />
 </head>
+<body>
+<header class="main-header">
+  <hgroup>
+    <div>
+      <img src="" style="margin-left: 34px; margin-top: 30px;">
+    </div>
+    <h1><a href=http://ikehall.github.io id="home-link">Seismic Python</a></h1>
+    <h2>This is where I write about python and other things</h2>
+  </hgroup>
+  <nav>
+    <ul class="main-nav">
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="http://ikehall.github.io/">Seismic Python </a></h1>
-                <nav><ul>
-                    <li><a href="http://ikehall.github.io/category/posts.html">posts</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
 
-<section id="content" class="body">
-    <h1>Authors on Seismic Python</h1>
-    <ul>
-        <li><a href="http://ikehall.github.io/author/ike-hall.html">Ike Hall</a> (1)</li>
+      <li><a href="#" id="You can add links in your config file-link">You can add links in your config file</a></li>
+      <li><a href="#" id="Another social link-link">Another social link</a></li>
+
+      <li><a href="http://ikehall.github.io/" id="feed-link">Feed</a></li>
+      <li><a href="mailto:?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
-</section>
+  </nav>
+  <a href="http://pelican.notmyidea.org" class="fork-me">Powered by Pelican.</a>
 
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="http://ikehall.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</header>
+<div class="mobile-nav">
+  <span class="nav-btn" id="mobile-nav-btn">
+    <span class="nav-btn-bar"></span>
+    <span class="nav-btn-bar"></span>
+    <span class="nav-btn-bar"></span>
+  </span>
+  <h3>
+    <a href="http://ikehall.github.io/" id="mobile-title">http://ikehall.github.io</a>
+  </h3>
+</div>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+<script src="/theme/gen/packed.js?0db83157"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+<script>
+    // Function to get the Maximam value in Array
+    Array.max = function( array ) {
+        return Math.max.apply( Math, array );
+    };
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+    var heights = [];
+    heights.push($('.main-header').height());
+    heights.push($('.main-section').height());
+    heights.push($(window).height());
+
+    var max_height = Array.max(heights);
+    $('.main-header').height(max_height+80);
+
+    $('#mobile-title').text(window.location.hostname);
+
+
+
+
+</script>
 
 </body>
-</html>
