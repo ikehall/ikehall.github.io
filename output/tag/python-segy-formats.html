@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Seismic Python - python SEGY formats</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Seismic Python </a></h1>
+                <nav><ul>
+                    <li><a href="/category/posts.html">posts</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/ibm-float-python.html">Converting IBM floats in Python</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-08-16T12:00:00-05:00">
+                Published: Wed 16 August 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ike-hall.html">Ike Hall</a>
+        </address>
+<p>In <a href="/category/posts.html">posts</a>.</p>
+<p>tags: <a href="/tag/python-segy-formats.html">python SEGY formats</a> </p>
+</footer><!-- /.post-info --><style type="text/css">/*!
+*
+* IPython notebook
+*
+*/.ansibold{font-weight:700}.ansiblack{}.ansired{color:#8b0000}.ansigreen{6400}.ansiyellow{color:#c4a000}.ansiblue{8b}.ansipurple{color:#9400d3}.ansicyan{color:#4682b4}.ansigray{color:gray}.ansibgblack{background-}.ansibgred{background-color:red}.ansibggreen{background-color:green}.ansibgyellow{background-color:#ff0}.ansibgblue{background-f}.ansibgpurple{background-color:#ff00ff}.ansibgcyan{background-ff}.ansibggray{background-color:gray}div.cell{border:1px solid transparent;display:-webkit-box;-webkit-box-orient:vertical;display:-moz-box;-moz-box-orient:vertical;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;border-radius:2px;box-sizing:border-box;-moz-box-sizing:border-box;border-width:thin;border-style:solid;width:100%;padding:5px;margin:0;outline:0}div.cell.selected{border-color:#ababab}@media print{div.cell.selected{border-color:transparent}}.edit_mode div.cell.selected{border-color:green}.prompt{min-width:14ex;padding:.4em;margin:0;font-family:monospace;text-align:right;line-height:1.21429em}div.inner_cell{display:-webkit-box;-webkit-box-orient:vertical;display:-moz-box;-moz-box-orient:vertical;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1}@-moz-document url-prefix(){div.inner_cell{overflow-x:hidden}}div.input_area{border:1px solid #cfcfcf;border-radius:2px;background:#f7f7f7;line-height:1.21429em}div.prompt:empty{padding-top:0;padding-bottom:0}div.unrecognized_cell{padding:5px 5px 5px 0;display:-webkit-box;-webkit-box-orient:horizontal;display:-moz-box;-moz-box-orient:horizontal;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}div.unrecognized_cell .inner_cell{border-radius:2px;padding:5px;font-weight:700;color:red;border:1px solid #cfcfcf;background:#eaeaea}div.unrecognized_cell .inner_cell a,div.unrecognized_cell .inner_cell a:hover{color:inherit;text-decoration:none}@media (max-width:540px){.prompt{text-align:left}div.unrecognized_cell>div.prompt{display:none}}div.code_cell{}div.input{page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;display:-moz-box;-moz-box-orient:horizontal;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}@media (max-width:540px){div.input{-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}}div.input_prompt{color:navy;border-top:1px solid transparent}div.input_area>div.highlight{margin:.4em;border:none;padding:0;background-color:transparent}div.input_area>div.highlight>pre{margin:0;border:none;padding:0;background-color:transparent}.CodeMirror{line-height:1.21429em;font-size:14px;height:auto;background:0 0}.CodeMirror-scroll{overflow-y:hidden;overflow-x:auto}.CodeMirror-lines{padding:.4em}.CodeMirror-linenumber{padding:0 8px 0 4px}.CodeMirror-gutters{border-bottom-left-radius:2px;border-top-left-radius:2px}.CodeMirror pre{padding:0;border:0;border-radius:0}.highlight-base,.highlight-variable{}.highlight-variable-2{color:#1a1a1a}.highlight-variable-3{color:#333}.highlight-string{color:#BA2121}.highlight-comment{color:#408080;font-style:italic}.highlight-number{80}.highlight-atom{color:#88F}.highlight-keyword{color:green;font-weight:700}.highlight-builtin{color:green}.highlight-error{color:red}.highlight-operator{color:#A2F;font-weight:700}.highlight-meta{color:#A2F}.highlight-def{f}.highlight-string-2{color:#f50}.highlight-qualifier{color:#555}.highlight-bracket{color:#997}.highlight-tag{color:#170}.highlight-attribute{c}.highlight-header{f}.highlight-quote{90}.highlight-link{c}.cm-s-ipython span.cm-keyword{color:green;font-weight:700}.cm-s-ipython span.cm-atom{color:#88F}.cm-s-ipython span.cm-number{80}.cm-s-ipython span.cm-def{f}.cm-s-ipython span.cm-variable{}.cm-s-ipython span.cm-operator{color:#A2F;font-weight:700}.cm-s-ipython span.cm-variable-2{color:#1a1a1a}.cm-s-ipython span.cm-variable-3{color:#333}.cm-s-ipython span.cm-comment{color:#408080;font-style:italic}.cm-s-ipython span.cm-string{color:#BA2121}.cm-s-ipython span.cm-string-2{color:#f50}.cm-s-ipython span.cm-meta{color:#A2F}.cm-s-ipython span.cm-qualifier{color:#555}.cm-s-ipython span.cm-builtin{color:green}.cm-s-ipython span.cm-bracket{color:#997}.cm-s-ipython span.cm-tag{color:#170}.cm-s-ipython span.cm-attribute{c}.cm-s-ipython span.cm-header{f}.cm-s-ipython span.cm-quote{90}.cm-s-ipython span.cm-link{c}.cm-s-ipython span.cm-error{color:red}.cm-s-ipython span.cm-tab{background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=')right no-repeat}div.output_wrapper{display:-webkit-box;-webkit-box-align:stretch;display:-moz-box;-moz-box-align:stretch;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch;z-index:1}div.output_scroll{height:24em;width:100%;overflow:auto;border-radius:2px;-webkit-box-shadow:inset 0 2px 8px rgba(0,0,0,.8);box-shadow:inset 0 2px 8px rgba(0,0,0,.8);display:block}div.output_collapsed{margin:0;padding:0;display:-webkit-box;-webkit-box-orient:vertical;display:-moz-box;-moz-box-orient:vertical;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}div.out_prompt_overlay{height:100%;padding:0 .4em;position:absolute;border-radius:2px}div.out_prompt_overlay:hover{-webkit-box-shadow:inset 0 0 1px #000;box-shadow:inset 0 0 1px #000;background:rgba(240,240,240,.5)}div.output_prompt{color:#8b0000}div.output_area{padding:0;page-break-inside:avoid;display:-webkit-box;-webkit-box-orient:horizontal;display:-moz-box;-moz-box-orient:horizontal;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}div.output_area .MathJax_Display{text-align:left!important}div.output_area div.output_area img,div.output_area svg{max-width:100%;height:auto}div.output_area img.unconfined,div.output_area svg.unconfined{max-width:none}.output{display:-webkit-box;-webkit-box-orient:vertical;display:-moz-box;-moz-box-orient:vertical;display:box;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}@media (max-width:540px){div.output_area{-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;box-align:stretch;display:flex;flex-direction:column;align-items:stretch}}div.output_area pre{margin:0;padding:0;border:0;vertical-align:baseline;background-color:transparent;border-radius:0}div.output_subarea{overflow-x:auto;padding:.4em;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;flex:1;max-width:calc(100% - 14ex)}div.output_text{text-align:left;line-height:1.21429em}div.output_stderr{background:#fdd}div.output_latex{text-align:left}div.output_javascript:empty{padding:0}.js-error{color:#8b0000}div.raw_input_container{font-family:monospace;padding-top:5px}span.raw_input_prompt{}input.raw_input{font-family:inherit;font-size:inherit;color:inherit;width:auto;vertical-align:baseline;padding:0 .25em;margin:0 .25em}input.raw_input:focus{box-shadow:none}p.p-space{margin-bottom:10px}div.output_unrecognized{padding:5px;font-weight:700;color:red}div.output_unrecognized a,div.output_unrecognized a:hover{color:inherit;text-decoration:none}.rendered_html{}.rendered_html :link,.rendered_html :visited,.rendered_html h1:first-child{margin-top:.538em}.rendered_html h2:first-child{margin-top:.636em}.rendered_html h3:first-child{margin-top:.777em}.rendered_html h4:first-child,.rendered_html h5:first-child,.rendered_html h6:first-child{margin-top:1em}.rendered_html *+ol,.rendered_html *+ul{margin-top:1em}.rendered_html *+table{margin-top:1em}.rendered_html *+p{margin-top:1em}.rendered_html *+img{margin-top:1em}div.text_cell{display:-webkit-box;-webkit-box-orient:horizontal;display:-moz-box;-moz-box-orient:horizontal;display:box;box-orient:horizontal;box-align:stretch;display:flex;flex-direction:row;align-items:stretch}@media (max-width:540px){div.text_cell>div.prompt{display:none}}div.text_cell_render{outline:0;resize:none;width:inherit;border-style:none;padding:.5em .5em .5em .4em;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}a.anchor-link:link{text-decoration:none;padding:0 20px;visibility:hidden}h1:hover .anchor-link,h2:hover .anchor-link,h3:hover .anchor-link,h4:hover .anchor-link,h5:hover .anchor-link,h6:hover .anchor-link{visibility:visible}.text_cell.rendered .input_area{display:none}.text_cell.rendered .text_cell.unrendered .text_cell_render{display:none}.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4,.cm-header-5,.cm-header-6{font-weight:700;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}.cm-header-1{font-size:185.7%}.cm-header-2{font-size:157.1%}.cm-header-3{font-size:128.6%}.cm-header-4{font-size:110%}.cm-header-5,.cm-header-6{font-size:100%;font-style:italic}</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Conversion-of-IBM-floating-points-in-Python">Conversion of IBM floating points in Python<a class="anchor-link" href="#Conversion-of-IBM-floating-points-in-Python">¶</a></h1><p>Recently, I have decided that it is time to make the switch from Python 2.7 to Python 3.5 or 3.6.  My machine currently has 3.5, so it will be that for now.  In addition to fixing all of the minor things that could break my code (like integer division without importing <strong>future</strong>, which actually appeared more frequently than I would have cared for), there are some other code-breaks that I have to fix in my code that I use every day.</p>
+<p>I spend a lot of my time working with a file format called a SEG-Y.  SEG-Y is the primary standard format for storing and transmitting seismic field data, processed images, etc.  If you aren't in geophysics, don't worry if you've never heard of it.  If you are, then good for you!  Lets have a beer sometime.</p>
+<p>Anyway, when I first began in this job, one of the first things I wrote was a SEG-Y read/write class.  In that I actually subclassed file, so that I could do things like seek to the seismic trace (an array of floats for you non-geophysicists) of my choosing and read a trace and header with readline().  Later I added functionality to it to support iteration and indexing...But that was years ago, and I've been happily using it ever since.  Even though I kind of cringe every time I look at the code.  It's ugly.  There are a number of places that I could do things in a cleaner manner, and it's likely a little less efficient than it could be.  But I do like using it, because it makes a lot of what I do easy.</p>
+<p>So this move to Python 3 is the perfect opportunity to refactor and reformulate this code, just because.</p>
+<p>And in doing so, I ran into my first problem that I did not expect.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.weave</span> <span class="k">as</span> <span class="nn">weave</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">ImportError</span>                               Traceback (most recent call last)
+<span class="ansigreen"><ipython-input-1-467572663f39></span> in <span class="ansicyan"><module></span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> <span class="ansigreen">import</span> numpy <span class="ansigreen">as</span> np<span class="ansiyellow"></span>
+<span class="ansigreen">----> 2</span><span class="ansiyellow"> </span><span class="ansigreen">import</span> scipy<span class="ansiyellow">.</span>weave <span class="ansigreen">as</span> weave<span class="ansiyellow"></span>
+
+<span class="ansired">ImportError</span>: No module named &apos;scipy.weave&apos;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That second line...weave.  It's quite possible that many of you have never ever ever heard of weave.  I kind of think of it as a precursor to numba.  It was one way that was available in 2009 for writing C-ish code that operated on numpy arrays without having to go out and write your own C-extension.  At the time, it was perfect for my needs, because I only ever used it for ONE thing.  Later, when I needed to get to compiled speed, I would use numba...because by that time, just compiling my weave code would give me deprecation warnings.  And now, weave has been completely eliminated.  It is GONE from scipy in Python 3, yielding that territory to numba, cython, ctypes, etc.  (Actually, it was spun off from scipy too, to exist as it's own package, just called weave...but the fact that that import works on my python 2 code only serves to illustrate that I haven't updated scipy in a little while).</p>
+<p>So what did I use it for?  What was the big heavy load that it was carrying?  Well, it goes back to SEG-Y files.  You see, before SEG-Y rev 1, (And by the way, this year, the standard for SEG-Y rev 2 was released...so another reason to refactor/update this code...gotta be able to handle those, even though we haven't actually seen any data in that format yet)...anyway, before rev 1 (2002), the original SEG-Y specification, which was published in 1975, allowed data to be stored in a few formats.  Two's-compliment integers of varying size (up to 4 whole bytes!!), 4-byte Fixed point decimals (which rev 1 calls "obsolete", but still supports), and 4 byte floats.</p>
+<p>But those 4 byte floats are kind of an issue.  Because the original 1975 SEG-Y specification mandated that they be big-endian IBM floating point numbers.</p>
+<p>We don't have any machines in my office, or that I own that can natively use IBM floating point numbers.  Everything we use are little-endian IEEE-754 floats.  So my code that utilizes weave has one very specific job.  Take an array of IBM floating point numbers and convert them to IEEE floating point numbers.  And it does it well.  But rather than just simply re-writing my old as a python function and wrapping it up with numba (easy), I thought it would be fun to go through some of the various ways this could be done.</p>
+<p>Plus there are a couple of teeny-tiny little issues with the old code that I have. First and foremost, that algorithm I used in that old code was borrowed from the implementation of the conversion in Seismic Unix.  I had done that primarily because I needed to spin up my code quickly and didn't want to think about the pesky conversion.  I admit that until I sat down to start re-writing the code (and this post), I hadn't thought about how it works at all.  But as I began to examine it and understand it, I wondered if I could do better.</p>
+<p>That bit of code I had borrowed is fast, but it is not complete.  First, it completely ignores any idea of utilizing the de-normalized format for floating point magnitudes less than 2<sup>-126</sup>.  Secondly, if somehow you screw things up and don't byteswap the numbers before going into that bit of code, it's likely you will get it stuck in an infinite loop.  Now, even if it didn't you'd get garbage out...but somehow I find that preferable to getting stuck in an infinite loop.</p>
+<p>In the scheme of things, those two things are not wildly important.  The byte-swapping and calls to this function are buried in more convienent functions that the user is supposed to use, so they don't have to worry about those pesky infinite loops.  And thus far I haven't really run into any need for using the denormalized floating point values that IEEE can support.  But who knows...maybe that could change someday.  So, for the sake of completeness, I wanted to take some time to really understand all of this, and see if I can't make these functions more complete, and maybe even faster in the process.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="IBM-vs-IEEE-floats-(32-bit)">IBM vs IEEE floats (32 bit)<a class="anchor-link" href="#IBM-vs-IEEE-floats-(32-bit)">¶</a></h2><p>Most of the machines you and I use on a daily basis natively process IEEE-754 floating point numbers.  Usually little-endian as well (endian-ness simply refers to the ordering of the bytes).  Swapping the byte order is trivial when using numpy arrays (simply call byteswap()!), so I won't cover that in here.  The non-trivial part though is converting from IBM to IEEE format.</p>
+<p>The IBM format, for 4 byte floats, looks like so:</p>
+<ul>
+<li>A sign bit</li>
+<li>A 7-bit exponent</li>
+<li>A 23 bit significand</li>
+<li>A zero at the end</li>
+</ul>
+<p>The IEEE format looks similar at first.  It has:</p>
+<ul>
+<li>A sign bit</li>
+<li>An 8-bit exponent</li>
+<li>A 23 bit significand</li>
+</ul>
+<p>But the differences are a bit more than just a differing length exponent.  Where the exponent (e) for IEEE floats specifies multiplication of the significand by 2<sup>(e-127)</sup>  (or 2<sup>(e-126)</sup> for the denormalized floats), the exponent for IBM floats specifies multiplication of the significand by 16<sup>(e-64)</sup>.  Additionally, for normalized IEEE floats (that is floats with an absolute value greater than 2<sup>-126</sup>), The mantissa contains an implied 1 at the beginning.  So all of the 23 bits in the significand represent the stuff that comes after the decimal point.  For IBM floats, there is always an implied zero before the decimal point.  There is no concept of normalized or de-normalized values.</p>
+<p>This means that the largest representable number as a single precision IBM float is somewhere around 10<sup>75</sup>, where the largest IEEE float is somewhere around 10<sup>38</sup>.  So our code has to do something for numbers larger than 10<sup>38</sup>.  The larger base for IBM floats also means that they are somewhat less precise than the base-2 IEEE numbers, but we aren't going to be doing any calculation in the IBM format, so we don't really care about that...Just converting, as best we can, to IEEE.  Because of the difference in the bases though, we are likely to lose a little more precision in the conversion.  There's nothing that can be done about that.</p>
+<p>Fortunately, rev 1 also allows for IEEE floats to be used, so I don't need to make the conversion go the other way.  I just have to make sure I set the appropriate bits in the header of any SEG-Y files I create.  Easy peasy there.</p>
+<h2 id="Making-the-conversion">Making the conversion<a class="anchor-link" href="#Making-the-conversion">¶</a></h2><p>The basic idea is the following:</p>
+<ul>
+<li>1: Get the sign bit.          (x & 0x80000000)</li>
+<li>2: Get the base 16 exponent.  (e=(x & 0x7f000000) >> 24)</li>
+<li>3: Subtract 64.               (e-= 64)</li>
+<li>4: Multiply the exponent(e) by 4.  (e <<= 2)</li>
+<li>5: Subtract another 24 from the exponent...because we are going to treat entire mantissa as an integer and it's 24 bits long.</li>
+<li>6: Get the mantissa (x & 0x00ffffff)</li>
+<li>7: Now return a float from: f = (-1)<sup>sign</sup> <em> m </em> 2<sup>e</sup></li>
+</ul>
+<p>Let's try a dead-simple numpy based function to do this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#First, we have to get some data.  </span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"../SeismicDatasets/test.sgy"</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f1</span><span class="p">:</span>
+    <span class="n">f1</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">3600</span><span class="o">+</span><span class="mi">240</span><span class="p">)</span>  <span class="c1">#Go to the first trace data.  Skip the 3200 byte text header, 400 byte binary header, </span>
+                       <span class="c1">#and 240 byte trace header fo the first trace</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1501</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span> <span class="c1">#Read in the first trace, which I know to have 1501 samples of 4byte IBM floats</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_float_pure_np</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="s1">'i4'</span><span class="p">)</span><span class="o">.</span><span class="n">byteswap</span><span class="p">()</span> <span class="c1">#Read the bytes object into a numpy array and byteswap</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr</span> <span class="o">&</span> <span class="mh">0x80000000</span><span class="p">)</span> <span class="o">>></span> <span class="mi">31</span>
+    <span class="n">exponent</span> <span class="o">=</span> <span class="p">((</span><span class="n">tr</span> <span class="o">&</span><span class="mh">0x7f000000</span><span class="p">)</span><span class="o">>></span><span class="mi">22</span><span class="p">)</span> <span class="o">-</span> <span class="mi">280</span>  <span class="c1">#This is a condensation of steps 2-5</span>
+    <span class="n">mantissa</span> <span class="o">=</span> <span class="n">tr</span> <span class="o">&</span> <span class="mh">0x00ffffff</span>
+    <span class="c1">#return ((-1)**sign)*(mantissa*(2**exponent))</span>
+    <span class="k">return</span> <span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">sign</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ldexp</span><span class="p">(</span><span class="n">mantissa</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">bytes_to_float_pure_np</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> bytes_to_float_pure_np(a)
+<span class="n">z</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10000 loops, best of 3: 47 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ -1.99506625e+05,  -7.24510750e+05,  -7.77255500e+05, ...,
+         1.51021622e+02,   6.70275000e+03,   5.02452344e+03])</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's not half bad. ~50 microseconds to do all of that for a single trace.  But that's hardly the best we can do.  That function above creates a number of temporary intermediate arrays, and every single time it does it makes another pass through the data.  But its illustrative to do this first because, ideally, that's how simple we'd like it to be.  Interstingly, making the calculation ourselves takes twice as long as using the numpy function ldexp.  Additionally, Note that the dtype here float64 instead of float32, like we might expect.  ldexp, it seems, defaults to double precision. (and strangely, I can't find a way to make it output 32 bit floats at all)  That's not exactly what I wanted...but it does take care of the overflow and underflow issues.  There are other routines I often use as well that default to 64 bit floating point output, regardless of the inputs. So I always have to make sure that I convert back to 32 bit floats before I write out to disk.  So it's not a huge deal really to have the output come at me as 64 bit floats.</p>
+<p>Ideally, I'd do one and only one pass through the data.  And I'd like to get back 32 bit floats instead of 64.  Let's try the same thing, but using the numpy "vectorize" routine.  This won't be as fast, because the math operations will be pure-python...But just to outline how this will go down before we wrap it up with numba.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_py</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1">#Convert one IBM float(interpreted as a 4-byte integer) to IEEE float (also interpreted as a 4-byte integer)</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span><span class="p">)</span> <span class="o">-</span> <span class="mi">280</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ldexp</span><span class="p">(</span><span class="n">mant</span><span class="p">,</span><span class="n">exp</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="o">-</span><span class="n">x</span> <span class="k">if</span> <span class="n">sign</span> <span class="k">else</span> <span class="n">x</span>
+
+<span class="n">ibm2ieee_vectorize</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">ibm2ieee_py</span><span class="p">,[</span><span class="s1">'f4'</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">bytes_to_float_py_np</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="s1">'i4'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ibm2ieee_vectorize</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+<span class="n">zz</span> <span class="o">=</span> <span class="n">bytes_to_float_py_np</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> zz=bytes_to_float_py_np(a)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100 loops, best of 3: 2 ms per loop
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we've slowed down the conversion by a factor of 40 or so, but we do only make one pass through the data and create no temporary arrays.  So that's nice.</p>
+<p>What if we wrap this up with numba instead of simply using numba's vectorize decorator?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">vectorize</span><span class="p">,</span> <span class="n">int32</span><span class="p">,</span> <span class="n">uint32</span><span class="p">,</span> <span class="n">float32</span>
+
+<span class="nd">@vectorize</span><span class="p">([</span><span class="n">float32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_numba</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span><span class="p">)</span> <span class="o">-</span> <span class="mi">280</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ldexp</span><span class="p">(</span><span class="n">mant</span><span class="p">,</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">x</span> <span class="k">if</span> <span class="n">sign</span> <span class="k">else</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_float_numba_ldexp</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ibm2ieee_numba</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">timeit</span> y = bytes_to_float_numba_ldexp(a)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10000 loops, best of 3: 22.3 µs per loop
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a marked improvement.  Twice as fast as the pure numpy example.  Excellent.  I have a hunch though that the call to ldexp is actually slower, especially in the compiled version, than it would be if we computed the result by hand.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@vectorize</span><span class="p">([</span><span class="n">float32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_numba2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span><span class="p">)</span> <span class="o">-</span> <span class="mi">280</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span>
+        <span class="c1">#x = math.ldexp(mant,exp)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">mant</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">**</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">x</span> <span class="k">if</span> <span class="n">sign</span> <span class="k">else</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_float_numba_no_ldexp</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ibm2ieee_numba2</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">bytes_to_float_numba_no_ldexp</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> x = bytes_to_float_numba_no_ldexp(a)
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100000 loops, best of 3: 16.8 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ -1.99506625e+05,  -7.24510750e+05,  -7.77255500e+05, ...,
+         1.51021622e+02,   6.70275000e+03,   5.02452344e+03], dtype=float32)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's a small speedup.  But not as much as I'd hoped for.  Incedentially, it's pretty much identical to simply replacing math.ldexp with np.ldexp.  The code I'm trying to replace actually gets about another factor of two speedup relative to this.  But as I mentioned before, that old code is incomplete.  Let's have a look at it.</p>
+<p>Below I will replicate it as a numba-vectorized routine, rather than the scipy.weave'd string I used before.  Note that there is no exponentiation in this routine.  We simply create the IEEE floating point representation of the number directly.  But again, we only create normalized IEEE floats.</p>
+<p>There are a few main differences to note.  First is the treatment of the exponent.  Like before, we read the 7 bytes after the sign bit and multiply by 4.  But since we are not going to do exponentiation, we want to form the unbiased base two exponent.  So if you will follow me through a tiny bit of math:</p>
+<ul>
+<li>16<sup>(x-64)</sup> = 2<sup>(y-127)</sup></li>
+<li>2<sup>(4*x-4*64)</sup> = 2<sup>(y-127)</sup></li>
+<li>Now we take the base two log of both sides</li>
+<li>4*x - 256 = y-127</li>
+<li>y = 4*x - 129</li>
+</ul>
+<p>So our base two unbiased exponent is 4 times the base 16 unbiased exponent minus 129.  BUT, we are forgetting one thing.  In the IBM representation, the mantissa has an implicit 0 before the decimal point, whereas the IEEE representation has an implicit 1 before the decimal point (when using the normalized formulation).  So, to move the decimal point, we will continuously multiply the IBM mantissa by two (bit-shifting to the left) until we have a one in the 25th byte location.  Each time we do that, we reduce the value of our base two exponent by one to represent the same number.  But we can take care of the first multiplication at the outset, which means we subtract 130 instead of 129, and do our multiplication loop until we get a one in the 24th bit.  This means if there is a one already there, we don't have to do any more bit-shifting and exponent reducing.  Then at the end, we simply stick all the bits together.  The sign bit, the new unbiased exponent, and the last 23 bits of the mantissa, lopping off the implied one that we have moved to the 24th bit location.  Boom, done.  Well, almost...we have to handle the cases of the exponent being too large or too small as well.</p>
+<p>One other thing to note:  this function goes uint->uint.  So after we are done, we have to tell the numpy array to interpret it's bytes as a 4-byte float.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@vectorize</span><span class="p">([</span><span class="n">uint32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_numba3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>                
+        <span class="n">e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">130</span>  
+        <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mant</span> <span class="o">&</span> <span class="mh">0x00800000</span><span class="p">):</span>        <span class="c1">#Keep moving decimal point right until a 1 is in the first place</span>
+            <span class="n">mant</span> <span class="o"><<=</span> <span class="mi">1</span>
+            <span class="n">e</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">></span> <span class="mi">254</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x7f7fffff</span> <span class="c1">#Set to largest possible float (clip)</span>
+        <span class="k">elif</span> <span class="n">e</span> <span class="o"><</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">e</span> <span class="o"><<</span> <span class="mi">23</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="n">mant</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_floats_numba_direct</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="n">converted_array</span> <span class="o">=</span> <span class="n">ibm2ieee_numba3</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+    <span class="n">converted_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">=</span><span class="s1">'f4'</span>
+    <span class="k">return</span> <span class="n">converted_array</span>
+
+<span class="n">xx</span><span class="o">=</span><span class="n">bytes_to_floats_numba_direct</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> xx=bytes_to_floats_numba_direct(a)
+<span class="n">xx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100000 loops, best of 3: 7.14 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ -1.99506625e+05,  -7.24510750e+05,  -7.77255500e+05, ...,
+         1.51021622e+02,   6.70275000e+03,   5.02452344e+03], dtype=float32)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There's our factor of two speedup.  And we can see that we are getting the same results in our array.  In this case we have not at all handled any underflow, though I don't think any is occuring in this particular array, because as we can see, it is equal to the array produced by our first, numpy only method.</p>
+<p>I can speed it up a tiny bit more by placing the most often called condition (the one where we actually make the number) first</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@vectorize</span><span class="p">([</span><span class="n">uint32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_numba4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>                
+        <span class="n">e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">130</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mant</span> <span class="o">&</span> <span class="mh">0x00800000</span><span class="p">):</span>        <span class="c1">#Keep moving decimal point right until a 1 is in the first place</span>
+            <span class="n">mant</span> <span class="o"><<=</span> <span class="mi">1</span>
+            <span class="n">e</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o"><=</span> <span class="n">e</span> <span class="o"><</span> <span class="mi">255</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">e</span> <span class="o"><<</span> <span class="mi">23</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="n">mant</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">></span> <span class="mi">254</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x7f7fffff</span> <span class="c1">#Set to largest possible float (clip)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+            
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_floats_numba_direct2</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="n">converted_array</span> <span class="o">=</span> <span class="n">ibm2ieee_numba4</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+    <span class="n">converted_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">=</span><span class="s1">'f4'</span>
+    <span class="k">return</span> <span class="n">converted_array</span>
+
+<span class="n">xx</span><span class="o">=</span><span class="n">bytes_to_floats_numba_direct2</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> xx=bytes_to_floats_numba_direct2(a)
+<span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100000 loops, best of 3: 6.75 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I think that's about as fast as I'm going to get this...But now I want to make some improvements.  The first is easy:  remember when I said that it's possible to get into an infinite loop in that while statement if you haven't byte-swapped first?  Let's protect against that. So let's add a condition to the while loop that we only loop if e>0.  That's going to slow things down a teeny-tiny bit for the checking of e.</p>
+<p>Additionally, let's put in some underflow handling, shall we?  IEEE-754 allows for handling of floats less than 2<sup>-126</sup> through it's de-normalized format, in which there is no leading one implied before the radix point.  We can actually handle numbers down to 2<sup>-126-23</sup> = 2<sup>-149</sup>.  In those cases, we simply set the exponent to zero and let the mantissa go as small as we like.  Actually, thinking about this has led me to notice something...do you notice that we let e go all the way to zero before we set x=0 before?  In any cases where we have done this, we've actually told IEEE to use the denormalized version...but we have left the mantissa as a number that implies a 1 before the radix point.  So previously, we've actually mis-handled numbers where e=0.  Let's fix that too.</p>
+<p>So if e does get to zero...then just use the first 23 bits of the mantissa instead of the last 23.  Further, if e starts off less than zero, shift the mantissa -e+1 bits to the right to capture whatever we can.  In fact, by doing this, we can eliminate the else that sets x = 0, and pick up signed zeros for the underflow.  Even though IBM floats do not specify a signed zero, we can.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@vectorize</span><span class="p">([</span><span class="n">uint32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee_numba5</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>                
+        <span class="n">e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">130</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mant</span> <span class="o">&</span> <span class="mh">0x00800000</span><span class="p">)</span> <span class="ow">and</span> <span class="n">e</span><span class="o">></span><span class="mi">0</span><span class="p">:</span>  <span class="c1">#Keep moving decimal point right until a 1 is in the first place</span>
+            <span class="n">mant</span> <span class="o"><<=</span> <span class="mi">1</span>
+            <span class="n">e</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o"><</span> <span class="n">e</span> <span class="o"><</span> <span class="mi">255</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">e</span> <span class="o"><<</span> <span class="mi">23</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="n">mant</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span> <span class="o">></span> <span class="mi">254</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x7f7fffff</span> <span class="c1">#Set to largest possible float (clip)</span>
+        <span class="c1">#elif e > -23:</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="p">(</span><span class="n">mant</span> <span class="o">>></span> <span class="p">(</span><span class="o">-</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span> <span class="c1">#handle underflow up to capabilities of IEEE</span>
+            
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_floats_numba_direct3</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="n">converted_array</span> <span class="o">=</span> <span class="n">ibm2ieee_numba5</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+    <span class="n">converted_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">=</span><span class="s1">'f4'</span>
+    <span class="k">return</span> <span class="n">converted_array</span>
+
+<span class="n">xx</span><span class="o">=</span><span class="n">bytes_to_floats_numba_direct3</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> xx=bytes_to_floats_numba_direct3(a)
+<span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100000 loops, best of 3: 7.9 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#For testing, we are just going to use a python version of the routine, and we won't be doing any byteswapping!</span>
+
+<span class="k">def</span> <span class="nf">ibm2ieee_py_final</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="c1">#x = (((x << 24) & 0xff000000) | ((x >> 24) & 0xff) | #Perform byteswapping!</span>
+        <span class="c1">#    ((x << 8) & 0xff0000) | ((x >> 8)) & 0xff00 )  </span>
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>                
+        <span class="n">e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">130</span>
+        <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">mant</span> <span class="o">&</span> <span class="mh">0x00800000</span><span class="p">))</span> <span class="ow">and</span> <span class="n">e</span><span class="o">></span><span class="mi">0</span><span class="p">:</span>  <span class="c1">#Keep moving decimal point to left until a 1 is in the first place</span>
+            <span class="n">mant</span> <span class="o"><<=</span> <span class="mi">1</span>
+            <span class="n">e</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o"><</span> <span class="n">e</span> <span class="o"><</span> <span class="mi">255</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">e</span> <span class="o"><<</span> <span class="mi">23</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="n">mant</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span> <span class="o">></span> <span class="mi">254</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x7f7fffff</span> <span class="c1">#Set to largest possible float (clip)</span>
+        <span class="c1">#elif e > -23:</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="p">(</span><span class="n">mant</span> <span class="o">>></span> <span class="p">(</span><span class="o">-</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span> <span class="c1">#handle underflow up to capabilities of IEEE</span>
+        <span class="c1">#else:</span>
+        <span class="c1">#    x = 0</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now I need some tests to test the underflow handling and a few edge cases.  Let's start with the middle denormalized IEEE float.  It will looks like this:</p>
+<ul>
+<li>exponent = 0000 0000</li>
+<li>mantissa = 100 0000 0000 0000 0000</li>
+</ul>
+<p>which means 2<sup>-1</sup> * 2<sup>-126</sup> = 2<sup>-127</sup></p>
+<p>As a uint, it looks like this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">middle_ieee</span> <span class="o">=</span> <span class="mb">0b00000000010000000000000000000000</span>
+<span class="n">middle_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>4194304</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As an IBM float though, that would be:
+2<sup>-127</sup> = 16<sup>-31</sup> * 2<sup>-3</sup></p>
+<ul>
+<li>So our exponent would be -31+64 = 33, =  0100001</li>
+<li>and our mantissa would be 0010 000 ... 0000</li>
+</ul>
+<p>Or as a uint:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm_middle_ieee</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mb">0b00100001001000000000000000000000</span><span class="p">)</span>
+<span class="n">ibm_middle_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>555745280</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [14]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm2ieee_py_final</span><span class="p">(</span><span class="n">ibm_middle_ieee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>4194304</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [15]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm2ieee_py_final</span><span class="p">(</span><span class="n">ibm_middle_ieee</span><span class="p">)</span> <span class="o">==</span> <span class="n">middle_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Great...so it handles perfectly the case where we work our way down to zero from a larger than zero exponent.  So far so good.  What about the case where we have an exponent that is less than zero to start with?.  What would the smallest denormalized IEEE float look like?</p>
+<p>That's simply a 1 in the very last bit.  It represents 2<sup>-126</sup> * 2<sup>-23</sup> = 2<sup>-149</sup></p>
+<p>As an IBM float, that's 16<sup>-37</sup> * 2<sup>-1</sup>, so it will have an exponent of 27 (0011011) and a mantissa of 1000 0000 .... 0000</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [16]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">smallest_ieee</span> <span class="o">=</span> <span class="mb">0b00000000000000000000000000000001</span>
+<span class="n">smallest_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [17]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm_smallest_ieee</span> <span class="o">=</span> <span class="mb">0b00011011100000000000000000000000</span>
+<span class="n">ibm_smallest_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>461373440</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [18]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm2ieee_py_final</span><span class="p">(</span><span class="n">ibm_smallest_ieee</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ibm2ieee_py_final</span><span class="p">(</span><span class="n">ibm_smallest_ieee</span><span class="p">)</span> <span class="o">==</span> <span class="n">smallest_ieee</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, to wrap things up, I have re-implemented single precision IBM float conversion as a numba vectorized function, because that seems to be the fastest I can get with ease.  I don't feel incredibly comfortable with Cython at the moment to see if I could perhaps eek out more speed by doing the same thing with it, but my feeling is that it probably wouldn't be significantly faster, if it's faster at all.  In addition to re-implementing the method I had used before, I also made it more robust (impossible to get stuck in an infinite loop, no matter how mangled the data are.  Yay!), and more complete than it had been before by adding the capability of handling underflow with de-normalized IEEE floats.</p>
+<p>So, just to re-package it all at the end, here is the routine I will be using in it's final form.  I hope you have enjoyed this little voyage through a data-type from 1975.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@vectorize</span><span class="p">([</span><span class="n">uint32</span><span class="p">(</span><span class="n">uint32</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">ibm2ieee</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">24</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff</span><span class="p">)</span> <span class="o">|</span> <span class="c1">#Perform byteswapping!</span>
+            <span class="p">((</span><span class="n">x</span> <span class="o"><<</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&</span> <span class="mh">0xff0000</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="n">x</span> <span class="o">>></span> <span class="mi">8</span><span class="p">))</span> <span class="o">&</span> <span class="mh">0xff00</span> <span class="p">)</span>  
+        <span class="n">mant</span> <span class="o">=</span> <span class="mh">0x00ffffff</span> <span class="o">&</span> <span class="n">x</span>                
+        <span class="n">e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="mh">0x7f000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">>></span> <span class="mi">22</span> <span class="p">)</span> <span class="o">-</span> <span class="mi">130</span>
+        <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">mant</span> <span class="o">&</span> <span class="mh">0x00800000</span><span class="p">))</span> <span class="ow">and</span> <span class="n">e</span><span class="o">></span><span class="mi">0</span><span class="p">:</span>  <span class="c1">#Keep moving decimal point right until a 1 is in the first place</span>
+            <span class="n">mant</span> <span class="o"><<=</span> <span class="mi">1</span>
+            <span class="n">e</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o"><</span> <span class="n">e</span> <span class="o"><</span> <span class="mi">255</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">e</span> <span class="o"><<</span> <span class="mi">23</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="n">mant</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span> <span class="o">></span> <span class="mi">254</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="mh">0x7f7fffff</span> <span class="c1">#Set to largest possible float (clip)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x80000000</span> <span class="o">&</span> <span class="n">x</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="mh">0x007fffff</span> <span class="o">&</span> <span class="p">(</span><span class="n">mant</span> <span class="o">>></span> <span class="p">(</span><span class="o">-</span><span class="n">e</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span> <span class="c1">#handle underflow up to capabilities of IEEE</span>
+            
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">bytes_to_floats</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">):</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">big_endian_bytes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'u4'</span><span class="p">)</span>
+    <span class="n">converted_array</span> <span class="o">=</span> <span class="n">ibm2ieee</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+    <span class="n">converted_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">=</span><span class="s1">'f4'</span>
+    <span class="k">return</span> <span class="n">converted_array</span>
+
+<span class="n">xx</span><span class="o">=</span><span class="n">bytes_to_floats</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> xx=bytes_to_floats(a)
+<span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>100000 loops, best of 3: 7.93 µs per loop
+</pre>
+</div>
+</div>
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I will likely be revisiting this in the future.  I just started reading the rev2 standard, and among other things, it supports little-endian encoding, so I'll be modifying the above code to make the byteswapping optional. (or using two versions, one with and one without...that's probably better...no unnecessary if statements).  Fortunately, I will not have to write a version to handle double precision IBM floats.  Though I suppose that's probably wrong.  It's not uncommon to get files that don't completely comply with the standard...I imagine I'll see one in 64-bit IBM format sometime next year.  Woo-hoo.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
