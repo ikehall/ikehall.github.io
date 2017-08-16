@@ -38,4 +38,4 @@ MARKUP = ('md','ipynb')
 
 PLUGIN_PATHS = ['./plugins', 'pelican-plugins']
 PLUGINS = ['ipynb.markup']
-THEME = './theme'
+THEME = './theme/notebook'
